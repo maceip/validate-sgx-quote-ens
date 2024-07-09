@@ -7,8 +7,8 @@ a demo using gramine and ethereum name service (with ccip offchain resolvers) to
 1) creates a new ethereum account
 2) creates a human 'name'
 3) reads the /dev/attestation pseudo hardware to get it's own MR_SIGNER and MR_ENCLAVE values
-4) uses the CCIP-Read gateway and creates a new subdomain off maceip.eth:
-   - little-lamb.eth
+4) uses the CCIP-Read gateway and creates a new subdomain:
+   - {human-name}.maceip.eth
         - with text records:
             - mr_signer
             - mr_enclave
