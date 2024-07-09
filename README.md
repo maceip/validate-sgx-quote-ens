@@ -13,13 +13,13 @@ a demo using gramine and ethereum name service (with ccip offchain resolvers) to
             - mr_signer
             - mr_enclave
          
-# run it in SGX:
-
+## run it in SGX:
+ _install gramine_
 1) ```SGX=1 make```
 2) ```SGX=1 make start-gramine-server```
-3) we have a ```sonja-quigley.maceip.eth```
+3) an ens-tee is born! 👶 ```sonja-quigley.maceip.eth```
    
-# demo resolve on-chain
+## demo resolve on-chain
 
 1) use the ens offchain-resolver repo
 2) call it like:
