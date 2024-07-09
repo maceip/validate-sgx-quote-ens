@@ -57,12 +57,14 @@ func main() {
 	address := crypto.PubkeyToAddress(*publicKeyECDSA).Hex()
 	fmt.Println("Address:", address)
 
+	///  link the EOA address to the quote intel will sign:
 	err = ioutil.WriteFile("/dev/attestation/user_report_data", []byte(address), 0644)
 	if err != nil {
 		fmt.Println("Error writing to /dev/attestation/user_report_data:", err)
 		os.Exit(1)
 	}
-
+	
+	///  get the quote
 	quote, err := ioutil.ReadFile("/dev/attestation/quote")
 	if err != nil {
 		fmt.Println("Error reading /dev/attestation/quote:", err)
@@ -179,6 +181,7 @@ func main() {
 	}
 	client := &http.Client{Transport: tr}
 
+	//send req to the ccip-read gateway
 	req, err := http.NewRequest("POST", "https://ens-gateway.exoskel.workers.dev/set", bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Printf("unable to post:  %s\n", err)
