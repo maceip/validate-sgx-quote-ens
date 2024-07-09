@@ -144,6 +144,22 @@ func main() {
 		os.Exit(1)
 	}
 
+	quote, err := ioutil.ReadFile("/dev/attestation/quote")
+	if err != nil {
+		fmt.Println("Error reading /dev/attestation/quote:", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf(" SGX quote with size = %d and the following fields:\n", len(quote))
+	fmt.Printf("  ATTRIBUTES.FLAGS: %x  [ Debug bit: %t ]\n", quote[96:104], quote[96]&2 > 0)
+	fmt.Printf("  ATTRIBUTES.XFRM:  %x\n", quote[104:112])
+	fmt.Printf("  MRENCLAVE:        %x\n", quote[112:144])
+	fmt.Printf("  MRSIGNER:         %x\n", quote[176:208])
+	fmt.Printf("  ISVPRODID:        %x\n", quote[304:306])
+	fmt.Printf("  ISVSVN:           %x\n", quote[306:308])
+	fmt.Printf("  quoteDATA:       %x\n", quote[368:400])
+	fmt.Printf("                    %x\n", quote[400:432])
+
 	report, err := ioutil.ReadFile("/dev/attestation/report")
 	if err != nil {
 		fmt.Println("Error reading /dev/attestation/report:", err)
@@ -161,7 +177,7 @@ func main() {
 	fmt.Printf("                    %x\n", report[352:384])
 
 	mr_enclave := report[64:96]
-	mr_signer := report[128:160]
+	//mr_signer := report[128:160]
 	enclave_data := slices.Concat(report[64:96], report[128:160])
 	enclave_hash := crypto.Keccak256Hash(enclave_data)
 
