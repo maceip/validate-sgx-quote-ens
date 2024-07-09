@@ -20,7 +20,6 @@ a demo using gramine and ethereum name service (with gasless ccip offchain resol
 3) an ens-tee is born! 👶 ```sonja-quigley.maceip.eth```
    
 ## demo resolve on-chain
-
 1) use the ens offchain-resolver repo
 2) call it like:
 ```
@@ -33,4 +32,12 @@ eth address 0x942855410cCa607E968261CcD2D156407671E795
 mr_signer 0xf146b6fd6824a77832754aa144ae2761abcbc3ae65adcffce4973980be6c872d
 mr_encalve 0xd4599e4a603c404e4aa8cda3e4ccfbb45870ddccb26ea2463adff11101d9c078
 ```
+
+## notes
+
+1) _the (resolver contract)[https://etherscan.io/address/0x33326e79248FbE36C4A0D88957cbA1e9a3a9731D#code]  imlpements:  ENSIP 10, and EIP 3668, so your old ens_resolver likely wont work_
+2) i hard coded the rootCA's for the ccip-read gateway (*.dev), and for the future merkle tree certificates server -- this will be moved to an ENS query in the future
+3) enclave *_lineage_* / linkability is not yet implemented. Who's enclave is this? but the plan is to use merkle tree certificates & an on chain root-ca to associate enclaves with owners / groups / etc; e.g., eigenlayer AVS node operator "alice.eth" is the parent of encalve "betty-boop.maceip.eth"
+4) maceip.eth will be swapped out, but the namewrapper support in ccip-read needs to land
+
 
