@@ -22,8 +22,8 @@ endif
 # performance that makes testing by running a benchmark with ab painful. The primary goal
 # of the DEBUG setting is to control Gramine's loglevel.
 -include $(SELF_EXE).d # See also: .cargo/config.toml
-$(SELF_EXE): tee-bootstrap-ens.go
-	go build 
+$(SELF_EXE): main.go
+	go build -o  tee-bootstrap-ens main.go
 
 tee-bootstrap-ens.manifest: tee-bootstrap-ens.manifest.template
 	gramine-manifest \

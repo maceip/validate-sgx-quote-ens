@@ -2,11 +2,16 @@ module github.com/maceip/tee-bootstrap-ens
 
 go 1.21.0
 
+replace github.com/wealdtech/go-ens/v3 => ../go-ens
+
 require (
+	github.com/andybalholm/brotli v1.1.0
 	github.com/etaaa/Golang-Ethereum-Personal-Sign v1.0.0
 	github.com/ethereum/go-ethereum v1.14.6
 	github.com/lzap/deagon v0.0.0-20221108193946-ebbec8ef187f
-	github.com/wealdtech/go-ens/v3 v3.6.0
+	github.com/pkg/errors v0.9.1
+	github.com/wealdtech/go-ens/v3 v3.0.0-00010101000000-000000000000
+	gopkg.in/restruct.v1 v1.0.0-20190323193435-3c2afb705f3c
 	tideland.dev/go/wait v0.2.0
 )
 
@@ -36,7 +41,6 @@ require (
 	github.com/multiformats/go-multibase v0.2.0 // indirect
 	github.com/multiformats/go-multihash v0.2.3 // indirect
 	github.com/multiformats/go-varint v0.0.6 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/supranational/blst v0.3.11 // indirect
@@ -52,5 +56,3 @@ require (
 	lukechampine.com/blake3 v1.1.6 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
-
-replace github.com/wealdtech/go-ens/v3 => ../go-ens
