@@ -209,8 +209,7 @@ func main() {
 		Message string `json:"message"`
 	}
 	type Text struct {
-		Mr_enclave string `json:"mr_enclave"`
-		Mr_signer  string `json:"mr_signer"`
+		Mr_enclave string `json:"description"`
 	}
 	type Address struct {
 		Sixty string `json:"60"`
@@ -233,8 +232,7 @@ func main() {
 		Sixty: address,
 	}
 	text := Text{
-		Mr_enclave: hexutil.Encode(mr_enclave),
-		Mr_signer:  hexutil.Encode(mr_signer),
+		Mr_enclave: "mr_enclave: " + hexutil.Encode(mr_enclave),
 	}
 	dataz := Payload{
 		Name:      name,
