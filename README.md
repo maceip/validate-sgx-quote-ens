@@ -1,4 +1,6 @@
-# bootstrapping trusted execution environments
+<img src="https://github.com/maceip/tee-bootstrap-ens/assets/804368/3f1aeb3a-468b-4522-bc3e-fe642d0d55ed" width="350"/>
+</br>
+<h1> bootstrapping trusted execution environments</h1>
 a demo using gramine and ethereum name service (with gasless ccip offchain resolvers) to create stateless enclaves
 
 
@@ -35,9 +37,12 @@ mr_encalve 0xd4599e4a603c404e4aa8cda3e4ccfbb45870ddccb26ea2463adff11101d9c078
 
 ## notes
 
-1) _the (resolver contract)[https://etherscan.io/address/0x33326e79248FbE36C4A0D88957cbA1e9a3a9731D#code]  imlpements:  ENSIP 10, and EIP 3668, so your old ens_resolver likely wont work_
-2) i hard coded the rootCA's for the ccip-read gateway (*.dev), and for the future merkle tree certificates server -- this will be moved to an ENS query in the future
-3) enclave *_lineage_* / linkability is not yet implemented. Who's enclave is this? but the plan is to use merkle tree certificates & an on chain root-ca to associate enclaves with owners / groups / etc; e.g., eigenlayer AVS node operator "alice.eth" is the parent of encalve "betty-boop.maceip.eth"
-4) maceip.eth will be swapped out, but the namewrapper support in ccip-read needs to land
+1) _the [resolver contract](https://etherscan.io/address/0x33326e79248FbE36C4A0D88957cbA1e9a3a9731D#code) imlpements [ENSIP 10](https://docs.ens.domains/ensip/10) and [EIP 3668](https://eips.ethereum.org/EIPS/eip-3668), so your old ens resolver likely wont work_
+2) ccip-read gateway tls cert is hard coded, this will be moved to an ENS query or [MTC](https://datatracker.ietf.org/doc/draft-davidben-tls-merkle-tree-certs/) assertion in the future
+3) enclave *_lineage_* / linkability is not yet implemented. Who's enclave is this? e.g., prove Eigenlayer AVS node operator "alice.eth" is the parent of encalve "betty-boop.maceip.eth"
+4) the ens domain: maceip.eth will be swapped out for something more utilitarian
 
-
+### ideas along the way
+1) [pkarr](https://github.com/Nuhvi/pkarr)
+2) [iroh-pkarr-ipns](https://github.com/n0-computer/iroh-experiments/blob/main/iroh-pkarr-naming-system/examples/cli.rs)
+3) prolly-trees 
