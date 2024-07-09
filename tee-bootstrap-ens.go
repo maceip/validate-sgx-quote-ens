@@ -2,29 +2,28 @@ package main
 
 import (
 	"fmt"
-
-	ps "github.com/etaaa/Golang-Ethereum-Personal-Sign"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"io/ioutil"
+	"log"
 	"slices"
 
-	"crypto/tls"
 	"bytes"
 	"context"
 	"crypto/ecdsa"
+	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
 	"encoding/pem"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/ethclient"
-	ens "github.com/wealdtech/go-ens/v3"
 	"net/http"
 	"os"
-	"tideland.dev/go/wait"
 	"time"
-	"github.com/lzap/deagon"
 
-	"log"
+	ps "github.com/etaaa/Golang-Ethereum-Personal-Sign"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/lzap/deagon"
+	ens "github.com/wealdtech/go-ens/v3"
+	"tideland.dev/go/wait"
 )
 
 type CertStore struct {
@@ -96,7 +95,6 @@ WprKASOshIArAoyZl+tJaox118fessmXn1hIVw41oeQa1v1vg4Fv74zPl6/AhSrw
 +qduBmpvvYuR7hZL6Dupszfnw0Skfths18dG9ZKb59UhvmaSGZRVbNQpsg3BZlvi
 d0lIKO2d1xozclOzgjXPYovJJIultzkMu34qQb9Sz/yilrbCgj8=
 -----END CERTIFICATE-----`
-
 const certPEM = `
 -----BEGIN CERTIFICATE-----
 MIIDejCCAwCgAwIBAgISBI1BD7TP62VJpLP6BvIU0r1OMAoGCCqGSM49BAMDMDIx
@@ -211,20 +209,19 @@ func main() {
 		Message string `json:"message"`
 	}
 	type Text struct {
-		mr_enclave    string `json:"mr_enclave"`
-		mr_signer  string `json:"mr_signer"`
+		Mr_enclave string `json:"mr_enclave"`
+		Mr_signer  string `json:"mr_signer"`
 	}
-        type Address struct {
-	      Sixty string `json:"60"`
+	type Address struct {
+		Sixty string `json:"60"`
 	}
-	
 
 	type Payload struct {
-		Name      string `json:"name"`
-		Owner     string `json:"owner"`
-                Addresses Address `json:"addresses"`
-                Texts     Text   `json:"texts"`
-		Signature Sig    `json:"signature"`
+		Name      string  `json:"name"`
+		Owner     string  `json:"owner"`
+		Addresses Address `json:"addresses"`
+		Texts     Text    `json:"texts"`
+		Signature Sig     `json:"signature"`
 	}
 
 	sig := Sig{
@@ -232,19 +229,18 @@ func main() {
 		Message: name,
 	}
 
-	addressSixty := Address {
+	addressSixty := Address{
 		Sixty: address,
 	}
-	text := Text {
-         mr_enclave: hexutil.Encode(mr_enclave),
-         mr_signer: hexutil.Encode(mr_signer),
-
-}	
+	text := Text{
+		Mr_enclave: hexutil.Encode(mr_enclave),
+		Mr_signer:  hexutil.Encode(mr_signer),
+	}
 	dataz := Payload{
 		Name:      name,
 		Owner:     address,
 		Signature: sig,
-                Texts:     text,
+		Texts:     text,
 		Addresses: addressSixty,
 	}
 
@@ -273,7 +269,7 @@ func main() {
 		panic("failed to parse root certificate")
 	}
 	tlsConfig := &tls.Config{
-		RootCAs:      roots,
+		RootCAs: roots,
 	}
 
 	block, _ := pem.Decode([]byte(certPEM))
@@ -294,7 +290,6 @@ func main() {
 		panic("failed to verify certificate: " + err.Error())
 	}
 
-
 	fmt.Printf("jsondata:  %s\n", bytes.NewBuffer(jsonData))
 	fmt.Printf("jsondata:  %s\n", bytes.NewBuffer(jsonAttestationData))
 	tr := &http.Transport{
@@ -308,7 +303,7 @@ func main() {
 		fmt.Printf("unable to post:  %s\n", err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")	
+	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -318,38 +313,19 @@ func main() {
 
 	defer resp.Body.Close()
 
-	/*
-
-	   req, err := http.NewRequest("POST", "http://127.0.0.1:4433/attestation/"+name, bytes.NewBuffer(jsonData))
-
-	   if err != nil {
-	   	fmt.Printf("unable to post:  %s\n", err)
-	   }
-
-	   req.Header.Set("Content-Type", "application/json")
-	   setClient := &http.Client{}
-	   resp, err := setClient.Do(req)
-	   if err != nil {
-	   	fmt.Printf("unable to set:  %s\n", err)
-	   }
-	   fmt.Println("got:  ", resp)
-
-	   defer resp.Body.Close()
-	*/
-
 	ethclient, err := ethclient.Dial("https://eth-mainnet.g.alchemy.com/v2/wsu3eqFqF2TtdHN1oGH9c6APK1kyYJxP")
 	if err != nil {
 		panic(err)
 	}
-	//mmyStore := NewCertStore()
+
 	ensTicker := wait.MakeMaxIntervalsTicker(5*time.Millisecond, 10)
 
 	ensQuery := func() (bool, error) {
 		domain := name
-                fmt.Println("resolving: " + domain)
+		fmt.Println("resolving: " + domain)
 		address, err := ens.Resolve(ethclient, domain)
 		if err != nil {
-                        log.Fatal("ens.Resolve: ", err)
+			log.Fatal("ens.Resolve: ", err)
 			return false, err
 		}
 		fmt.Printf("address is %s\n", address)
