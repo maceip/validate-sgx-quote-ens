@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Go + WebAssembly Example</title>
+</head>
+
+<body>
+
+    <script src="/wasm_exec.js"></script>
+    <script>
+
+  function pi() {
+            const go = new Go();
+            WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+                go.run(result.instance);
+                v = jsPI(document.getElementById("attestation").value)
+                document.getElementById("result").textContent = v
+            });
+
+
+        }
+
+pi()
+    </script>
+</body>
+<form>
+    Attestation: <input type="text" id="attestation">
+    <input type="button" value="verify" onclick="pi()">
+    <div id="result"></div>
+</form>
+
+</html>

@@ -1,8 +1,7 @@
 module github.com/maceip/tee-bootstrap-ens
 
-go 1.21.0
+go 1.22
 
-replace github.com/wealdtech/go-ens/v3 => ../go-ens
 
 require (
 	github.com/andybalholm/brotli v1.1.0
@@ -10,7 +9,6 @@ require (
 	github.com/ethereum/go-ethereum v1.14.6
 	github.com/lzap/deagon v0.0.0-20221108193946-ebbec8ef187f
 	github.com/pkg/errors v0.9.1
-	github.com/wealdtech/go-ens/v3 v3.0.0-00010101000000-000000000000
 	gopkg.in/restruct.v1 v1.0.0-20190323193435-3c2afb705f3c
 	tideland.dev/go/wait v0.2.0
 )
